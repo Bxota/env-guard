@@ -11,7 +11,7 @@ use crate::types::EnvValue;
 /// # Example
 ///
 /// ```no_run
-/// use env_guard::{EnvSchema, VarSpec, EnvType};
+/// use envguard_rs::{EnvSchema, VarSpec, EnvType};
 ///
 /// let env = EnvSchema::new()
 ///     .var(VarSpec::new("PORT", EnvType::Int).default("8080"))

@@ -1,5 +1,5 @@
 [package]
-name = "env-guard"
+name = "envguard-rs"
 version = "0.1.0"
 edition = "2024"
 description = "Validate environment variables at startup with a declarative schema"

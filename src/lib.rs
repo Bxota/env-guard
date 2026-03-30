@@ -1,14 +1,14 @@
-//! # env_guard
+//! # envguard_rs
 //!
 //! Validate environment variables at application startup with a declarative schema.
 //!
-//! Define what you expect; `env_guard` reads from the environment, applies defaults,
+//! Define what you expect; `envguard_rs` reads from the environment, applies defaults,
 //! checks types and regex constraints, and returns **all** errors at once.
 //!
 //! ## Quick start
 //!
 //! ```no_run
-//! use env_guard::{EnvSchema, VarSpec, EnvType};
+//! use envguard_rs::{EnvSchema, VarSpec, EnvType};
 //!
 //! let env = EnvSchema::new()
 //!     .var(VarSpec::new("PORT", EnvType::Int).default("8080"))

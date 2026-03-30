@@ -13,7 +13,7 @@ use crate::types::EnvType;
 /// # Example
 ///
 /// ```
-/// use env_guard::{VarSpec, EnvType};
+/// use envguard_rs::{VarSpec, EnvType};
 ///
 /// let spec = VarSpec::new("PORT", EnvType::Int)
 ///     .required()
