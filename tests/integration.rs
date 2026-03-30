@@ -14,12 +14,11 @@ fn env(pairs: &[(&str, &str)]) -> HashMap<String, String> {
         .collect()
 }
 
-fn validate(schema: &EnvSchema, map: HashMap<String, String>) -> Result<envguard::ValidatedEnv, envguard::EnvErrors> {
-    schema.validate_from(move |name| {
-        map.get(name)
-            .cloned()
-            .ok_or(std::env::VarError::NotPresent)
-    })
+fn validate(
+    schema: &EnvSchema,
+    map: HashMap<String, String>,
+) -> Result<envguard::ValidatedEnv, envguard::EnvErrors> {
+    schema.validate_from(move |name| map.get(name).cloned().ok_or(std::env::VarError::NotPresent))
 }
 
 // ── Required / Missing ───────────────────────────────────────────────────────
@@ -88,7 +87,11 @@ fn bool_coercion_accepts_all_truthy_forms() {
     let schema = EnvSchema::new().var(VarSpec::new("FLAG", EnvType::Bool));
     for truthy in ["true", "1", "yes", "on", "TRUE", "YES"] {
         let validated = validate(&schema, env(&[("FLAG", truthy)])).unwrap();
-        assert_eq!(validated.get_bool("FLAG"), Some(true), "failed for '{truthy}'");
+        assert_eq!(
+            validated.get_bool("FLAG"),
+            Some(true),
+            "failed for '{truthy}'"
+        );
     }
 }
 
@@ -97,7 +100,11 @@ fn bool_coercion_accepts_all_falsy_forms() {
     let schema = EnvSchema::new().var(VarSpec::new("FLAG", EnvType::Bool));
     for falsy in ["false", "0", "no", "off", "FALSE", "NO"] {
         let validated = validate(&schema, env(&[("FLAG", falsy)])).unwrap();
-        assert_eq!(validated.get_bool("FLAG"), Some(false), "failed for '{falsy}'");
+        assert_eq!(
+            validated.get_bool("FLAG"),
+            Some(false),
+            "failed for '{falsy}'"
+        );
     }
 }
 
@@ -106,10 +113,8 @@ fn bool_coercion_accepts_all_falsy_forms() {
 #[test]
 #[cfg(feature = "regex-validation")]
 fn regex_match_passes() {
-    let schema = EnvSchema::new().var(
-        VarSpec::new("LEVEL", EnvType::Str)
-            .regex(r"^(debug|info|warn|error)$"),
-    );
+    let schema = EnvSchema::new()
+        .var(VarSpec::new("LEVEL", EnvType::Str).regex(r"^(debug|info|warn|error)$"));
     let validated = validate(&schema, env(&[("LEVEL", "info")])).unwrap();
     assert_eq!(validated.get_str("LEVEL"), Some("info"));
 }
@@ -117,10 +122,8 @@ fn regex_match_passes() {
 #[test]
 #[cfg(feature = "regex-validation")]
 fn regex_mismatch_produces_error() {
-    let schema = EnvSchema::new().var(
-        VarSpec::new("LEVEL", EnvType::Str)
-            .regex(r"^(debug|info|warn|error)$"),
-    );
+    let schema = EnvSchema::new()
+        .var(VarSpec::new("LEVEL", EnvType::Str).regex(r"^(debug|info|warn|error)$"));
     let errors = validate(&schema, env(&[("LEVEL", "verbose")])).unwrap_err();
     assert!(errors.to_string().contains("does not match pattern"));
 }
@@ -128,9 +131,7 @@ fn regex_mismatch_produces_error() {
 #[test]
 #[cfg(feature = "regex-validation")]
 fn invalid_regex_pattern_is_invalid_spec_error() {
-    let schema = EnvSchema::new().var(
-        VarSpec::new("X", EnvType::Str).regex(r"[invalid("),
-    );
+    let schema = EnvSchema::new().var(VarSpec::new("X", EnvType::Str).regex(r"[invalid("));
     let errors = validate(&schema, env(&[("X", "anything")])).unwrap_err();
     assert!(errors.to_string().contains("invalid spec for 'X'"));
 }

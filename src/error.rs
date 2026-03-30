@@ -8,9 +8,17 @@ pub enum EnvError {
     /// The variable is required but neither set nor has a default.
     Missing { name: String },
     /// The raw string value could not be coerced into the expected type.
-    ParseError { name: String, raw: String, expected: EnvType },
+    ParseError {
+        name: String,
+        raw: String,
+        expected: EnvType,
+    },
     /// The raw string value does not match the declared regex pattern.
-    RegexMismatch { name: String, raw: String, pattern: String },
+    RegexMismatch {
+        name: String,
+        raw: String,
+        pattern: String,
+    },
     /// The spec itself is invalid (e.g. the regex pattern is malformed).
     InvalidSpec { name: String, reason: String },
 }
@@ -21,7 +29,11 @@ impl fmt::Display for EnvError {
             EnvError::Missing { name } => {
                 write!(f, "'{name}' is required but not set")
             }
-            EnvError::ParseError { name, raw, expected } => {
+            EnvError::ParseError {
+                name,
+                raw,
+                expected,
+            } => {
                 write!(f, "'{name}' = {raw:?} cannot be parsed as {expected}")
             }
             EnvError::RegexMismatch { name, raw, pattern } => {
