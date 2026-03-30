@@ -1,0 +1,16 @@
+[package]
+name = "envguard"
+version = "0.1.0"
+edition = "2024"
+description = "Validate environment variables at startup with a declarative schema"
+license = "MIT"
+repository = "https://github.com/Bxota/env-guard"
+keywords = ["env", "environment", "config", "validation", "schema"]
+categories = ["config", "development-tools"]
+
+[dependencies]
+regex = { version = "1", optional = true }
+
+[features]
+default = ["regex-validation"]
+regex-validation = ["dep:regex"]
