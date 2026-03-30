@@ -15,7 +15,7 @@ use crate::{
 /// # Example
 ///
 /// ```no_run
-/// use envguard::{EnvSchema, VarSpec, EnvType};
+/// use env_guard::{EnvSchema, VarSpec, EnvType};
 ///
 /// let env = EnvSchema::new()
 ///     .var(VarSpec::new("PORT", EnvType::Int).default("8080"))
@@ -62,7 +62,7 @@ impl EnvSchema {
     ///
     /// ```
     /// use std::collections::HashMap;
-    /// use envguard::{EnvSchema, VarSpec, EnvType};
+    /// use env_guard::{EnvSchema, VarSpec, EnvType};
     ///
     /// let mut map = HashMap::new();
     /// map.insert("PORT".to_string(), "8080".to_string());

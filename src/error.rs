@@ -56,7 +56,7 @@ impl std::error::Error for EnvError {}
 ///
 /// # Example
 /// ```
-/// # use envguard::{EnvSchema, VarSpec, EnvType};
+/// # use env_guard::{EnvSchema, VarSpec, EnvType};
 /// if let Err(errors) = EnvSchema::new().var(VarSpec::new("MISSING", EnvType::Str)).validate() {
 ///     eprintln!("{errors}");
 ///     // prints all errors, one per line

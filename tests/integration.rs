@@ -5,7 +5,7 @@
 /// so we can inject a closure over a HashMap instead.
 use std::collections::HashMap;
 
-use envguard::{EnvSchema, EnvType, VarSpec};
+use env_guard::{EnvSchema, EnvType, VarSpec};
 
 fn env(pairs: &[(&str, &str)]) -> HashMap<String, String> {
     pairs
@@ -17,7 +17,7 @@ fn env(pairs: &[(&str, &str)]) -> HashMap<String, String> {
 fn validate(
     schema: &EnvSchema,
     map: HashMap<String, String>,
-) -> Result<envguard::ValidatedEnv, envguard::EnvErrors> {
+) -> Result<env_guard::ValidatedEnv, env_guard::EnvErrors> {
     schema.validate_from(move |name| map.get(name).cloned().ok_or(std::env::VarError::NotPresent))
 }
 
